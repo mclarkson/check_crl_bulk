@@ -1,0 +1,98 @@
+++++
+<img src="http://www.smorg.co.uk/images/check_crl_bulk.png"
+alt="Nagios GUI Screenshot" style="float:none" />
+++++
+
+Check CRL Bulk
+--------------
+
+Check the 'Next Update' times for a number of CRL files using OpenSSL.
+
+Requires OpenSSL.
+
+*INSTALL*
+
+Example:
+
+----
+wget https://raw.github.com/mclarkson/check_crl_bulk/master/check_crl_bulk
+chmod +x check_crl_bulk
+mv check_crl_bulk /usr/lib64/nagios/plugins/
+----
+
+*EXAMPLE OUTPUT*
+
+----
+OK:12 OK, 0 expired, 0 invalid.
+
+CRITICAL: 12 OK, 0 expired, 1 invalid.
+
+CRITICAL: 12 OK, 2 expired, 1 invalid.
+
+CRITICAL: Unexpected number of files ( 14 expected, found 15 ). 12 OK, 2 expired, 1 invalid.
+
+CRITICAL: 12 OK, 2 expired, 1 invalid.
+ecc8aa3d.r0 - 3 days left
+3c618bf6.r0 - 3 days left
+b0c32c73.r0 - 3 days left
+7a5a47c2.r0 - 3 days left
+ab0321db.r0 - 3 days left
+9b8758dc.r0 - 3 days left
+e8e6e27c.r0 - EXPIRED (2 years ago)
+5178bab2.r0 - EXPIRED (2 years ago)
+ca58f176.r0 - 3 days left
+fcb3ab08.r0 - 3 days left
+34f34704.r0 - 11 hours left
+058843a1.r0 - 11 hours left
+a000af92.r0 - 2 months left
+6a4f0b0d.r0 - 2 months left
+deadbeef.r0 - INVALID FILE. | ok=12 expired=2 invalid=1
+----
+
+*MANUAL PAGE*
+
+----
+$ ./check_crl_bulk -h
+
+check_crl_bulk - Check the 'Next Update' field of a number of CRL,
+Certificate Revocation List, files in bulk.
+
+Usage: check_crl_bulk [options]
+
+ -h      : Display this help text.
+ -c DIR  : Location of the directory containing CRL files.
+           (Default is: /etc/crl)
+ -i REGX : Include files matching the REGX regular expression.
+           Specify more than once to add more include expressions.
+ -x REGX : Exclude files matching the REGX regular expression.
+           Specify more than once to add more exclude expressions.
+ -f      : Make REGX searches FILE GLOBS instead. In this case a
+           '.' will match a dot only and '*' will be needed.
+ -n NUM  : Expected number of files.
+ -p      : Add performance data for graphing.
+ -v      : Be more verbose. Show file names and status.
+
+Examples:
+
+ Check all files in the default directory, '/etc/crl':
+
+ ./check_crl_bulk
+
+ Exclude all files names containing ".p7" and 5178 in their name:
+
+ ./check_crl_bulk -x "\.p7" -x "5178"
+
+ Same as the previous search but using file globbing:
+
+ ./check_crl_bulk -f -x "*.p7*" -x "*5178*"
+
+ Exclude all files ending in .old and check that there are 6 files:
+
+ ./check_crl_bulk -f -x "*.old" -n 6
+
+ Check all files, show their status, and add performance stats.
+
+ ./check_crl_bulk -v -p
+
+----
+
