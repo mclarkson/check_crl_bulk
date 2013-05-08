@@ -118,11 +118,6 @@ sanity_checks()
         exit 2
     }
 
-    if ! which date >& /dev/null; then
-        echo "Unknown: openssl binary not found in path. Aborting."
-        exit $UNKN
-    fi
-
     for binary in openssl find date grep; do
         if ! which $binary >& /dev/null; then
             echo "Unknown: $binary binary not found in path. Aborting."
