@@ -25,6 +25,8 @@ mv check_crl_bulk /usr/lib64/nagios/plugins/
 ----
 OK:12 OK, 0 expired, 0 invalid.
 
+WARNING: No CRL files found.
+
 CRITICAL: 12 OK, 0 expired, 1 invalid.
 
 CRITICAL: 12 OK, 2 expired, 1 invalid.
