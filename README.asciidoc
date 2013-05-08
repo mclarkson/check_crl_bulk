@@ -23,32 +23,29 @@ mv check_crl_bulk /usr/lib64/nagios/plugins/
 *EXAMPLE OUTPUT*
 
 ----
-OK:12 OK, 0 expired, 0 invalid.
+OK: 12 OK, 0 expired, 0 expiring, 0 invalid.
 
-CRITICAL: No CRL files found. | ok=0 expired=0 invalid=0
+CRITICAL: No CRL files found. | ok=0 expired=0 invalid=0 expiring=0
 
-CRITICAL: 12 OK, 0 expired, 1 invalid.
+CRITICAL: 12 OK, 0 expired, 0 expiring, 1 invalid.
 
-CRITICAL: 12 OK, 2 expired, 1 invalid.
+CRITICAL: 12 OK, 1 expired, 0 expiring, 0 invalid.
 
-CRITICAL: Unexpected number of files ( 14 expected, found 15 ). 12 OK, 2 expired, 1 invalid.
+CRITICAL: Unexpected number of files ( 11 expected, found 12 ). 10 OK, 0 expired, 2 expiring, 0 invalid.
 
-CRITICAL: 12 OK, 2 expired, 1 invalid.
-ecc8aa3d.r0 - 3 days left
-3c618bf6.r0 - 3 days left
-b0c32c73.r0 - 3 days left
-7a5a47c2.r0 - 3 days left
-ab0321db.r0 - 3 days left
-9b8758dc.r0 - 3 days left
-e8e6e27c.r0 - EXPIRED (2 years ago)
-5178bab2.r0 - EXPIRED (2 years ago)
-ca58f176.r0 - 3 days left
-fcb3ab08.r0 - 3 days left
-34f34704.r0 - 11 hours left
-058843a1.r0 - 11 hours left
-a000af92.r0 - 2 months left
-6a4f0b0d.r0 - 2 months left
-deadbeef.r0 - INVALID FILE. | ok=12 expired=2 invalid=1
+WARNING: CRLs expiring soon. 10 OK, 0 expired, 2 expiring, 0 invalid.
+efc8aa3d.r0 - 2 days left
+3d618bf6.r0 - 2 days left
+b0c32e73.r0 - 3 days left
+7a5a47e2.r0 - 3 days left
+ac0321db.r0 - 3 days left
+9c8758dc.r0 - 3 days left
+cf58f176.r0 - 3 days left
+fcb3cb08.r0 - 2 days left
+34a34704.r0 - 9 hours left (!)
+058843d1.r0 - 9 hours left (!)
+a000aa92.r0 - 2 months left
+6a4e0b0d.r0 - 2 months left | ok=10 expired=0 expiring=2 invalid=0
 ----
 
 *MANUAL PAGE*
@@ -73,12 +70,17 @@ Usage: check_crl_bulk [options]
  -n NUM  : Expected number of files.
  -p      : Add performance data for graphing.
  -v      : Be more verbose. Show file names and status.
+ -w NUM  : Warn if a CRL is within NUM hours of expiring.
 
 Examples:
 
  Check all files in the default directory, '/etc/crl':
 
  ./check_crl_bulk
+
+ Check all files. Show a warning if a CRL will expire within 2 days.
+
+ ./check_crl_bulk -w 48
 
  Exclude all files names containing ".p7" and 5178 in their name:
 
