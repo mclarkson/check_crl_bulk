@@ -6,7 +6,7 @@ alt="Nagios GUI Screenshot" style="float:none" />
 Check CRL Bulk
 --------------
 
-Check the 'Next Update' times for a number of CRL files using OpenSSL.
+Check the `Next Update' times for a number of CRL files using OpenSSL.
 
 Requires OpenSSL.
 
